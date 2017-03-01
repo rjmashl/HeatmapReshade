@@ -1,0 +1,24 @@
+#thres, #enhance {
+ float: left;
+ clear: left;
+ width: 200px;
+ margin: 15px;
+}
+#thresVal {
+ width: 50px;
+}
+#enhanceVal {
+ width: 50px;
+ }
+#thres .ui-slider-range { background: #ef2929; }
+#thres .ui-slider-handle { border-color: #505050; }
+
+#enhance .ui-slider-range { background: #ef2929; }
+#enhance .ui-slider-handle { border-color: #505050; }
+
+#mytable {
+ border-collapse: collapse;
+}
+#mytable, th, td {
+ border: 1px solid black;
+}

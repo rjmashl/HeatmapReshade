@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Heatmap Reshade - jQuery Slider Example</title>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+<!-- INPUT STYLE  -->
+<link href="style.css" rel="stylesheet" type="text/css"/>
+<!-- INPUT OUR LIBRARY  -->
+<script src="HeatmapReshade.js"></script>
+</head>
+
+<body>
+
+<!-- HTML SECTION  -->
+<div>
+  <p>Create a 50 x 40 table of pseudo-random values on [ -1 , 1 ]: <button type="button" id="create">Create table</button></p>
+  <p><div id="thres"> </div>Threshold: <input type="text" id="thresVal"  readonly/> Cells whose values are greater than this are tinted green; otherwise red</p>
+  <p><div id="enhance"> </div>Enhancement factor: <input type="text" id="enhanceVal"  readonly/> Higher enhancement values reduce the intensity of cells whose values are closer to the threshold value</p>
+  <div id="myTableDiv"></div>
+</div>
+
+<!-- JAVASCRIPT SECTION  -->
+<script type="text/javascript">
+// Create global objects
+var globRows = 50;
+var globCols = 40;
+
+function myCellValues () {
+    return  (Math.random()*2.0 - 1.0).toFixed(4);
+}
+</script>
+
+<script type="text/javascript">
+// Click-create matrix
+$("#create").click(function() {
+    var tableHTML = createHTMLMatrix( globRows, globCols, "mytable", "t", "z", myCellValues);
+    $("#myTableDiv").html(tableHTML);
+    heatmapReshade( 1, globRows,1,globCols,"t","z","thres","thresVal","enhance", "enhanceVal");
+});
+
+// Define and initialize sliders
+$(function() {
+    $("#thres" ).slider({
+	orientation: "horizontal",
+	range: false,
+	min: -1,
+	max: 1,
+	step: 0.01,
+	value: 0.00,
+	slide: function() { heatmapReshade( 1, globRows,1,globCols,"t","z","thres","thresVal","enhance", "enhanceVal"); },
+	change: function() { heatmapReshade( 1, globRows,1,globCols,"t","z","thres","thresVal","enhance", "enhanceVal"); }
+    });
+
+    $("#enhance" ).slider({
+	orientation: "horizontal",
+	range: false,
+	min: 0,
+	max: 15,
+	step: 0.1,
+	value: 0,
+	slide: function() { heatmapReshade( 1, globRows,1,globCols,"t","z","thres","thresVal","enhance", "enhanceVal"); },
+	change: function() { heatmapReshade( 1, globRows,1,globCols,"t","z","thres","thresVal","enhance", "enhanceVal"); }
+    });
+
+    $( "#thres" ).slider( "value", 0.0 );
+    $( "#enhance" ).slider( "value", 0 );
+});
+
+</script>
+
+</body>
+</html>
